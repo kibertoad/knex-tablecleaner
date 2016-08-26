@@ -1,0 +1,20 @@
+{
+  "name": "knex-tablecleaner",
+  "version": "1.0.0",
+  "description": "Knex Tablecleaner",
+  "maintainers": [
+    {
+      "name": "igorsavin",
+      "email": "iselwin@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kibertoad/knex-tablecleaner.git"
+  },
+  "main": "src/tablecleaner.js",
+  "devDependencies": {},
+  "dependencies": {
+    "async": "^2.0.1"
+  }
+}
