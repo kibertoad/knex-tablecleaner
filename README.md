@@ -4,9 +4,9 @@ Simple library for deleting all rows from a given list of DB tables.
 
 Example usage:
 
-gulp.task('cleanDb', function (cb) {
+gulp.task('cleanDb', ['migrateDb'], function (cb) {
   var knex = knexHelper.initKnexInstance();
-  tableCleaner.cleanTables (knex, ['INBOX', 'MESSAGE', 'MESSAGE_INFO', 'CONTENT'], cb);
+  tableCleaner.cleanTables(knex, ['INBOX', 'MESSAGE', 'MESSAGE_INFO', 'CONTENT'], cb, true);
 });
 
 <...>
