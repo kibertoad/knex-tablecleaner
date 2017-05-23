@@ -2,7 +2,7 @@
  * Created by IgorSavin on 8/25/2016.
  */
 
-var async = require('async');
+let async = require('async');
 
 function Tablecleaner() {
 }
@@ -11,24 +11,21 @@ function Tablecleaner() {
  *
  * @param knex - instance of a knex
  * @param tableNames - array of strings
- * @param cb - callback that will be invoked after cleaning is finished
- * @param destroyKnexOnCompletion - if truthy, will destroy knex after done
  */
-Tablecleaner.prototype.cleanTables = function (knex, tableNames, cb, destroyKnexOnCompletion) {
-
-  var commands = [];
-  for (x in tableNames) {
-    tableName = tableNames[x];
-    commands.push(makeCleanTableCommand(knex, tableName));
-  }
-
-  async.series(commands, function (err, results) {
-    if (destroyKnexOnCompletion) {
-      knex.destroy();
+Tablecleaner.prototype.cleanTables = function (knex, tableNames) {
+  return new Promise((resolve, reject) => {
+    let commands = [];
+    for (x in tableNames) {
+      tableName = tableNames[x];
+      commands.push(makeCleanTableCommand(knex, tableName));
     }
-    cb(err);
+
+    async.series(commands, function (err, results) {
+      resolve();
+    });
+
   });
-}
+};
 
 function makeCleanTableCommand(knex, tableName) {
   return function (callback) {

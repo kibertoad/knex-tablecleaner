@@ -1,6 +1,6 @@
 {
   "name": "knex-tablecleaner",
-  "version": "1.0.1",
+  "version": "2.0.5",
   "description": "Knex Tablecleaner",
   "maintainers": [
     {
@@ -15,6 +15,6 @@
   "main": "src/tablecleaner.js",
   "devDependencies": {},
   "dependencies": {
-    "async": "^2.0.1"
+    "async": "^2.4.1"
   }
 }
