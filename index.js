@@ -1,5 +1,3 @@
 const tableCleaner = require('./src/tablecleaner');
 
-module.exports = {
-	tableCleaner
-};
+module.exports = tableCleaner;
