@@ -1,40 +1,37 @@
-/**
- * Created by IgorSavin on 8/25/2016.
- */
+const async = require('async');
 
-let async = require('async');
+function cleanTables (knex, tableNames) {
+	return new Promise((resolve, reject) => {
+		let commands = [];
+		for (tableName of tableNames) {
+			commands.push(_makeCleanTableCommand(knex, tableName));
+		}
 
-function Tablecleaner() {
+		async.series(commands, (err, results) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(results);
+			}
+		});
+
+	});
 }
 
-/**
- *
- * @param knex - instance of a knex
- * @param tableNames - array of strings
- */
-Tablecleaner.prototype.cleanTables = function (knex, tableNames) {
-  return new Promise((resolve, reject) => {
-    let commands = [];
-    for (x in tableNames) {
-      tableName = tableNames[x];
-      commands.push(makeCleanTableCommand(knex, tableName));
-    }
+function _makeCleanTableCommand(knex, tableName) {
+	return function (callback) {
+		console.log('Deleting all rows from table ' + tableName);
+		return knex(tableName).del()
+			.then(function (result) {
+				console.log('Done deleting. Deleted: ' + result);
+				callback(null, result);
+			})
+			.catch((err) => {
+				callback(err);
+			});
+	}
+}
 
-    async.series(commands, function (err, results) {
-      resolve();
-    });
-
-  });
+module.exports = {
+	cleanTables
 };
-
-function makeCleanTableCommand(knex, tableName) {
-  return function (callback) {
-    console.log('Deleting all rows from table ' + tableName);
-    return knex(tableName).del().then(function (result) {
-      console.log('Done deleting. Deleted: ' + result);
-      callback(null, result);
-    });
-  }
-}
-
-module.exports = Tablecleaner;

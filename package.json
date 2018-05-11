@@ -1,20 +1,27 @@
 {
   "name": "knex-tablecleaner",
-  "version": "2.0.5",
+  "version": "3.0.0",
   "description": "Knex Tablecleaner",
   "maintainers": [
     {
-      "name": "igorsavin",
-      "email": "iselwin@gmail.com"
+      "name": "Igor Savin",
+      "email": "kibertoad@gmail.com"
     }
   ],
   "repository": {
     "type": "git",
     "url": "git://github.com/kibertoad/knex-tablecleaner.git"
   },
-  "main": "src/tablecleaner.js",
-  "devDependencies": {},
+  "main": "index.js",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "knex": "^0.14.6",
+    "mocha": "^5.1.1",
+    "sinon": "^5.0.7",
+    "sqlite3": "^4.0.0"
+  },
   "dependencies": {
-    "async": "^2.4.1"
+    "async": "^2.6.0"
   }
 }
