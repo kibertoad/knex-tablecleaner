@@ -1,37 +1,41 @@
-const async = require('async');
+const async = require("async");
 
-function cleanTables (knex, tableNames) {
-	return new Promise((resolve, reject) => {
-		let commands = [];
-		for (tableName of tableNames) {
-			commands.push(_makeCleanTableCommand(knex, tableName));
-		}
+function cleanTables(knex, tableNames, verboseLog = false) {
+  return new Promise((resolve, reject) => {
+    let commands = [];
+    for (tableName of tableNames) {
+      commands.push(_makeCleanTableCommand(knex, tableName, verboseLog));
+    }
 
-		async.series(commands, (err, results) => {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(results);
-			}
-		});
-
-	});
+    async.series(commands, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
 }
 
-function _makeCleanTableCommand(knex, tableName) {
-	return function (callback) {
-		console.log('Deleting all rows from table ' + tableName);
-		return knex(tableName).del()
-			.then(function (result) {
-				console.log('Done deleting. Deleted: ' + result);
-				callback(null, result);
-			})
-			.catch((err) => {
-				callback(err);
-			});
-	}
+function _makeCleanTableCommand(knex, tableName, verboseLog) {
+  return function(callback) {
+    if (verboseLog) {
+      console.log("Deleting all rows from table " + tableName);
+    }
+    return knex(tableName)
+      .del()
+      .then(function(result) {
+        if (verboseLog) {
+          console.log("Done deleting. Deleted: " + result);
+        }
+        callback(null, result);
+      })
+      .catch(err => {
+        callback(err);
+      });
+  };
 }
 
 module.exports = {
-	cleanTables
+  cleanTables
 };
