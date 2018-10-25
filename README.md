@@ -1,34 +1,24 @@
 # knex-tablecleaner
 
 Simple library for deleting all rows from a given list of DB tables.
+Tables are cleaned sequentially in a given order to avoid foreign key constraint violations.
 
 Example usage:
 
-gulp.task('cleanDb', ['migrateDb'], function (cb) {
-  var knex = knexHelper.initKnexInstance();
-  tableCleaner.cleanTables(knex, ['INBOX', 'MESSAGE', 'MESSAGE_INFO', 'CONTENT'], cb, true);
-});
+```js
+const tableCleaner = require('knex-tablecleaner');
+const knex = require('../db');
 
-<...>
+const defaultTablesToClean = [
+  'orders',
+  'users'
+];
 
-
-var config = require('../config/config');
-
-exports.initKnexInstance = function () {
-  console.log('Init db: ' + config.get('DB_USER') + '/<Password omitted>' + '@' + config.get('DB_HOSTNAME') + '/' +
-    config.get('DB_DATABASE'));
-
-  return require('knex')({
-    client: 'oracledb',
-    connection: {
-      host: config.get('DB_HOSTNAME'),
-      user: config.get('DB_USER'),
-      password: config.get('DB_PASSWORD'),
-      database: config.get('DB_DATABASE')
-    },
-    pool: {
-      min: 1,
-      max: 1
-    }
-  });
+function cleanDb(tablesToClean = defaultTablesToClean) {
+  return tableCleaner.cleanTables(knex, tablesToClean);
 }
+
+module.exports = {
+  cleanDb,
+};
+```
