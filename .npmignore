@@ -5,3 +5,5 @@ README.md
 build/
 test/
 .nyc_output/
+.travis.yml
+.eslintrc.json
