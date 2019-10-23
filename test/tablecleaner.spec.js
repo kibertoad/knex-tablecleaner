@@ -1,5 +1,5 @@
 const chai = require("chai");
-const { assert, expect } = chai;
+const { expect } = chai;
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
@@ -17,17 +17,18 @@ describe("tablecleaner", () => {
   beforeEach(() => {
     return dbInitializer.cleanDb(knex);
   });
-  after(async () => {
-    await dbInitializer.dropDb(knex);
-    await knex.destroy();
+  after(() => {
+    return dbInitializer.dropDb(knex).then(() => {
+      return knex.destroy();
+    });
   });
 
-  it("happy path", async () => {
-    await tableCleaner.cleanTables(knex, ["models"]);
+  it("happy path", () => {
+    return tableCleaner.cleanTables(knex, ["models"]);
   });
 
-  it("handles error correctly", async () => {
-    await expect(
+  it("handles error correctly", () => {
+    return expect(
       tableCleaner.cleanTables(knex, ["models2"])
     ).to.be.rejectedWith(
       /delete from `models2` - SQLITE_ERROR: no such table: models2/

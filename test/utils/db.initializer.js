@@ -25,7 +25,7 @@ function cleanDb(knex) {
   return _cleanTables(knex);
 }
 
-async function _cleanTables(knex, tables = DEFAULT_TABLES) {
+function _cleanTables(knex, tables = DEFAULT_TABLES) {
   return dbCleaner.cleanTables(knex, tables);
 }
 
