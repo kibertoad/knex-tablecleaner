@@ -1,6 +1,6 @@
 {
   "name": "knex-tablecleaner",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Knex Tablecleaner",
   "maintainers": [
     {
@@ -15,7 +15,7 @@
   "scripts": {
     "test": "mocha test/**/*.spec.js",
     "test-with-coverage": "nyc mocha --opts \"./mocha.opts\" test",
-    "test-travis": "npm run eslint && nyc mocha --opts \"./mocha.opts\" test",
+    "test:ci": "npm run eslint && nyc mocha --opts \"./mocha.opts\" test",
     "prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
     "eslint": "eslint --format codeframe \"src/**/*.js\" \"test/**/*.js\""
   },
@@ -23,17 +23,17 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^5.7.0",
-    "eslint-plugin-prettier": "^3.0.0",
-    "knex": "^0.15.2",
+    "eslint": "^5.16.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "knex": "^0.17.6",
     "mocha": "^5.2.0",
-    "nyc": "^13.1.0",
-    "prettier": "^1.14.3",
-    "sinon": "^7.1.0",
-    "sqlite3": "^4.0.3"
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "sinon": "^7.5.0",
+    "sqlite3": "^4.1.0"
   },
   "dependencies": {
-    "async": "^2.6.1"
+    "async": "^2.6.3"
   },
   "nyc": {
     "description": "test coverage",
