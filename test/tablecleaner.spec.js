@@ -91,11 +91,11 @@ describe('tablecleaner', () => {
 
 function getErrorRegexForDb(knex) {
   if (isSQLite(knex)) {
-    return /delete from `models2` - SQLITE_ERROR: no such table: models3/;
+    return /delete from `models3` - SQLITE_ERROR: no such table: models3/;
   }
 
   if (isPostgreSQL(knex)) {
-    return /delete from "models2" - relation "models3" does not exist/;
+    return /delete from "models3" - relation "models3" does not exist/;
   }
 
   if (isMssql(knex)) {
