@@ -7,7 +7,7 @@ function cleanTables(knex, tableNames, verboseLog = false) {
     }
 
     let commands = [];
-    for (tableName of tableNames) {
+    for (const tableName of tableNames) {
       commands.push(_makeCleanTableCommand(knex, tableName, verboseLog));
     }
 

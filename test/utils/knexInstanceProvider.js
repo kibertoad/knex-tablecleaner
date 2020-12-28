@@ -9,7 +9,7 @@ const Db = {
   SQLite: 'sqlite3',
 };
 
-const defaultDbs = [Db.PostgresSQL, Db.MySQL, Db.MySQL2, Db.SQLite, Db.MSSQL];
+const defaultDbs = [Db.PostgresSQL, Db.MySQL, Db.SQLite, Db.MSSQL];
 
 function getAllDbs() {
   return process.env.DB ? process.env.DB.split(' ') : defaultDbs;

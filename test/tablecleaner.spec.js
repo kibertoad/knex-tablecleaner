@@ -3,7 +3,7 @@ const { expect } = chai;
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 
-const tableCleaner = require('../src/tablecleaner');
+const tableCleaner = require('..');
 const dbInitializer = require('./utils/dbInitializer');
 
 const { getAllDbs, getKnexForDb } = require('./utils/knexInstanceProvider');
@@ -35,7 +35,7 @@ describe('tablecleaner', () => {
           await dbInitializer.dropDb(knex);
         });
 
-        it('supports array of tables', async () => {
+        it('supports array of tables with single element', async () => {
           await knex('models').insert({});
           await knex('models').insert({});
           const entriesBeforeClean = await knex('models').select();
@@ -45,6 +45,25 @@ describe('tablecleaner', () => {
 
           const entriesAfterClean = await knex('models').select();
           expect(entriesAfterClean.length).to.equal(0);
+        });
+
+        it('supports array of tables with several elements', async () => {
+          await knex('models').insert({});
+          await knex('models').insert({});
+          await knex('models2').insert({});
+          await knex('models2').insert({});
+          await knex('models2').insert({});
+          const entriesBeforeClean1 = await knex('models').select();
+          expect(entriesBeforeClean1.length).to.equal(2);
+          const entriesBeforeClean2 = await knex('models2').select();
+          expect(entriesBeforeClean2.length).to.equal(3);
+
+          await tableCleaner.cleanTables(knex, ['models', 'models2'], true);
+
+          const entriesAfterClean1 = await knex('models').select();
+          expect(entriesAfterClean1.length).to.equal(0);
+          const entriesAfterClean2 = await knex('models2').select();
+          expect(entriesAfterClean2.length).to.equal(0);
         });
 
         it('supports single table', async () => {
@@ -62,7 +81,7 @@ describe('tablecleaner', () => {
         it('handles error correctly', async () => {
           let errorRegex = getErrorRegexForDb(knex);
           await expect(
-            tableCleaner.cleanTables(knex, ['models2'])
+            tableCleaner.cleanTables(knex, ['models3'])
           ).to.be.rejectedWith(errorRegex);
         });
       });
@@ -72,11 +91,11 @@ describe('tablecleaner', () => {
 
 function getErrorRegexForDb(knex) {
   if (isSQLite(knex)) {
-    return /delete from `models2` - SQLITE_ERROR: no such table: models2/;
+    return /delete from `models3` - SQLITE_ERROR: no such table: models3/;
   }
 
   if (isPostgreSQL(knex)) {
-    return /delete from "models2" - relation "models2" does not exist/;
+    return /delete from "models3" - relation "models3" does not exist/;
   }
 
   if (isMssql(knex)) {
@@ -84,6 +103,6 @@ function getErrorRegexForDb(knex) {
   }
 
   if (isMysql(knex)) {
-    return /Table 'knex_test.models2' doesn't exist/;
+    return /Table 'knex_test.models3' doesn't exist/;
   }
 }
