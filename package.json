@@ -72,18 +72,10 @@
     "db"
   ],
   "files": [
-    "bin/*",
-    "lib/*",
-    "lib/*",
-    "scripts/*",
-    "types/index.d.ts",
-    "types/result.d.ts",
-    "types/tables.d.ts",
-    "CHANGELOG.md",
-    "CONTRIBUTING.md",
-    "knex.js",
+    "src/*",
+    "index.d.ts",
+    "index.js",
     "LICENSE",
-    "README.md",
-    "UPGRADING.md"
+    "README.md"
   ]
 }
