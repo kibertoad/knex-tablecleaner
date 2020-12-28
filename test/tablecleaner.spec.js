@@ -80,7 +80,7 @@ function getErrorRegexForDb(knex) {
   }
 
   if (isMssql(knex)) {
-    return /delete from `models2` - Table 'knex_test.models2' doesn't exist/;
+    return /Invalid object name/;
   }
 
   if (isMysql(knex)) {
