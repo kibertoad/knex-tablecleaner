@@ -2,7 +2,7 @@
   "name": "knex-tablecleaner",
   "version": "4.1.0",
   "license": "MIT",
-  "description": "Knex Tablecleaner",
+  "description": "Library for sequentially deleting all rows from a given list of DB tables.",
   "maintainers": [
     {
       "name": "Igor Savin",
