@@ -1,7 +1,11 @@
-const async = require("async");
+const async = require('async');
 
 function cleanTables(knex, tableNames, verboseLog = false) {
   return new Promise((resolve, reject) => {
+    if (!Array.isArray(tableNames)) {
+      tableNames = [tableNames];
+    }
+
     let commands = [];
     for (tableName of tableNames) {
       commands.push(_makeCleanTableCommand(knex, tableName, verboseLog));
@@ -18,24 +22,24 @@ function cleanTables(knex, tableNames, verboseLog = false) {
 }
 
 function _makeCleanTableCommand(knex, tableName, verboseLog) {
-  return function(callback) {
+  return function (callback) {
     if (verboseLog) {
-      console.log("Deleting all rows from table " + tableName);
+      console.log('Deleting all rows from table ' + tableName);
     }
     return knex(tableName)
       .del()
-      .then(function(result) {
+      .then(function (result) {
         if (verboseLog) {
-          console.log("Done deleting. Deleted: " + result);
+          console.log('Done deleting. Deleted: ' + result);
         }
         callback(null, result);
       })
-      .catch(err => {
+      .catch((err) => {
         callback(err);
       });
   };
 }
 
 module.exports = {
-  cleanTables
+  cleanTables,
 };
