@@ -4,7 +4,7 @@ declare const tableCleaner: {
   cleanTables: (
     knex: Knex,
     tableNames: string | string[],
-    verboseLog: boolean
+    verboseLog?: boolean
   ) => Promise<void>;
 };
 

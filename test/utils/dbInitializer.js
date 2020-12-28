@@ -1,13 +1,17 @@
-const { tableCleaner } = require('../../');
-
-const DEFAULT_TABLES = ['models'];
-
-function dropDb(knex) {
-  return knex.schema.dropTableIfExists('models');
+async function dropDb(knex) {
+  await knex.schema.dropTable('models');
+  await knex.schema.dropTable('models2');
 }
 
-function createDb(knex) {
-  return knex.schema.createTableIfNotExists(`models`, function (table) {
+async function createDb(knex) {
+  await knex.schema.createTable(`models`, function (table) {
+    table.increments('id');
+    table.string('name');
+    table.string('surname');
+    table.string('description');
+  });
+
+  await knex.schema.createTable(`models2`, function (table) {
     table.increments('id');
     table.string('name');
     table.string('surname');
@@ -15,16 +19,7 @@ function createDb(knex) {
   });
 }
 
-function cleanDb(knex) {
-  return _cleanTables(knex);
-}
-
-function _cleanTables(knex, tables = DEFAULT_TABLES) {
-  return dbCleaner.cleanTables(knex, tables);
-}
-
 module.exports = {
-  cleanDb,
   createDb,
   dropDb,
 };

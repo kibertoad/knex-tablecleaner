@@ -33,5 +33,5 @@ module.exports = {
 `function cleanTables(knex, tableNames, verboseLog = false)` accepts following parameters:
 * `knex` - pre-initialized knex instance that will be used for accessing the database;
 * `tableNames` - either a string with a table name, or an array of strings with table names;
-* `verboseLog` - if set to true, will log a list of cleaned tables and a completion log message.
+* `verboseLog` - if set to true, will log a list of tables being cleaned and the completion log messages.
 
